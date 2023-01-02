@@ -1,0 +1,58 @@
+.glass {
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px #4747470b;
+  border: 1px solid rgba(114, 100, 240, 0.5);
+  padding: 20px;
+}
+
+.glass:hover {
+  border: 1px solid gray;
+}
+
+.glass h4 {
+  font-size: 30px;
+}
+.glass > span {
+  font-size: 18px;
+}
+
+.input_field {
+  height: 35px;
+  border: none;
+  border: 1px solid rgb(114, 100, 240);
+  border-radius: 5px;
+  padding: 5px;
+  width: 100%;
+}
+
+.input_field:focus {
+  outline: none;
+  border: 1px solid gray;
+}
+
+.submit-btn {
+  background: rgb(114, 100, 240);
+  padding: 10px;
+  width: 100%;
+  color: white;
+  border-radius: 5px;
+}
+
+.submit-btn:hover {
+  background: rgb(246, 133, 115);
+}
+
+.profile {
+  width: 120px;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.below_link {
+  font-size: 14px;
+}
+
+.link {
+  margin-left: 5px;
+}
