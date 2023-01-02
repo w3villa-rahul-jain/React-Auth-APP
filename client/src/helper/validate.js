@@ -7,19 +7,6 @@ export async function usernameValidate(values) {
   return errors;
 }
 
-/** validate password */
-
-function passwordVerify(errors ={}, values){
-    if(!values.password){
-        errors.password = toast.error("Password Required...");
-    }
-    else if(values.password.includes(" ")){
-        errors.password  = toast.error("Invalid Password...");
-    }
-    
-}
-
-
 /** validate username */
 function usernameVerify(error = {}, values) {
   if (!values.username) {
