@@ -37,6 +37,10 @@ const router = createBrowserRouter([
     element: <Register></Register>,
   },
   {
+    path: "/reset",
+    element: <Reset></Reset>,
+  },
+  {
     path: "*",
     element: <PageNotFound></PageNotFound>,
   },
