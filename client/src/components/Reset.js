@@ -32,8 +32,6 @@ const Reset = () => {
             </span>
           </div>
           <form className="py-1" onSubmit={formik.handleSubmit}>
-            
-
             <div className="textbox flex flex-col items-center gap-6">
               <input
                 {...formik.getFieldProps("password")}
@@ -48,17 +46,12 @@ const Reset = () => {
                 placeholder="Repeat Password"
               />
               <button type="submit" className="submit-btn">
-                Sign In
+                Reset
               </button>
             </div>
 
             <div className="text-center py-4">
-              <span className="below_link">
-                Forget Password ?
-                <Link className="text-red-500 link" to="/recovery">
-                  Recover Now
-                </Link>
-              </span>
+              
             </div>
           </form>
         </div>

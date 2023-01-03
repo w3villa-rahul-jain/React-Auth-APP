@@ -6,12 +6,11 @@ export async function passwordValidate(values) {
   return errors;
 }
 
-
-export async function resetPasswordValidation(values){
+export async function resetPasswordValidation(values) {
   const errors = passwordVerify({}, values);
-  
-  if(values.password !== values.confirm_pwd){
-      errors.exist = toast.error("Password Not Match ..!");
+
+  if (values.password !== values.confirm_pwd) {
+    errors.exist = toast.error("Password Not Match ..!");
   }
 
   return errors;
@@ -19,7 +18,7 @@ export async function resetPasswordValidation(values){
 
 /** validate password */
 
-function passwordVerify(errors = {}, values) {
+export function passwordVerify(errors = {}, values) {
   if (!values.password) {
     errors.password = toast.error("Password Required...");
   } else if (values.password.includes(" ")) {
