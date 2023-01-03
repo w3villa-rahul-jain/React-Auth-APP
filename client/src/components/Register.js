@@ -35,7 +35,7 @@ const Register = () => {
   return (
     <div className="container max-auto">
       <Toaster position="top-center" reverseOrder={false}></Toaster>
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen mt-3">
         <div className="glass">
           <div className="title flex flex-col items-center">
             <h4 className="font-bold">Register</h4>
