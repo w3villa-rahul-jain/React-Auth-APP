@@ -5,18 +5,20 @@ import "../styles/Username.css";
 import { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import convertToBase64 from "../helper/convert";
-import { registerValidation } from "../helper/validate";
+import { profileValidation } from "../helper/validate";
 
 const Profile = () => {
   const [file, setFile] = useState();
 
   const formik = useFormik({
     initialValues: {
+      firstName: "",
+      lastName: "",
       email: "",
-      username: "",
-      password: "",
+      mobileNo: "",
+      address: "",
     },
-    validate: registerValidation,
+    validate: profileValidation,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
@@ -108,9 +110,9 @@ const Profile = () => {
 
             <div className="text-center py-4">
               <span className="below_link">
-                Already Register?
+                come back later
                 <Link className="text-red-500 link" to="/">
-                  Login Now
+                  logout
                 </Link>
               </span>
             </div>

@@ -9,6 +9,17 @@ export async function usernameValidate(values) {
 }
 
 
+// validate profile page 
+
+export async function profileValidation(values) {
+  const errors = emailVerify({}, values);
+
+  return errors; 
+}
+
+
+
+
 // validate Register form 
 export async function registerValidation(values){
   const errors = usernameVerify({}, values);
