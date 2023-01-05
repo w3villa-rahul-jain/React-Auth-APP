@@ -11,6 +11,25 @@ const  jwt  = pkg;
 //     "profile" : ""
 //   }
 
+// middleware for verify user
+
+export async function verifyUser(req, res, next){
+    try{
+        const {username} = req.method == "GET" ?  req.query : req.body;
+
+        // check the user existance
+        let exist = await UserModel.findOne({username});
+        if(!exist) return res.status(404).send({error: "Can't Find User !"});
+        next();
+
+
+       } catch(error){
+           return res.status(404).send({error : "Authenticate User"});
+       }
+
+}
+     
+
 export async function register(req, res) {
   try {
     const { username, password, profile, email } = req.body;
