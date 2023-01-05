@@ -6,7 +6,7 @@ const router = Router();
 import * as controller from '../Controllers/appControllers.js'
 
 
-router.route('/register').post((req, res)=> res.json('register Route'));
+router.route('/register').post(controller.register);
 router.route('/registerMail').post();  //send the email
 router.route('/authentication').post((req, res)=> res.end()); //authenticate user
 router.route('/login').post(controller.login);  //logini in app
