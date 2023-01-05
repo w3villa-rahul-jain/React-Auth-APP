@@ -1,9 +1,9 @@
 import UserModel from "../model/User.model.js";
 import bcrypt from "bcrypt";
-import pkg from 'jsonwebtoken';
+import pkg from "jsonwebtoken";
 import ENV from "../router/config.js";
 
-const  jwt  = pkg;
+const jwt = pkg;
 // {
 //     "username" : "rahul",
 //     "password" : "admin123",
@@ -13,22 +13,18 @@ const  jwt  = pkg;
 
 // middleware for verify user
 
-export async function verifyUser(req, res, next){
-    try{
-        const {username} = req.method == "GET" ?  req.query : req.body;
+export async function verifyUser(req, res, next) {
+  try {
+    const { username } = req.method == "GET" ? req.query : req.body;
 
-        // check the user existance
-        let exist = await UserModel.findOne({username});
-        if(!exist) return res.status(404).send({error: "Can't Find User !"});
-        next();
-
-
-       } catch(error){
-           return res.status(404).send({error : "Authenticate User"});
-       }
-
+    // check the user existance
+    let exist = await UserModel.findOne({ username });
+    if (!exist) return res.status(404).send({ error: "Can't Find User !" });
+    next();
+  } catch (error) {
+    return res.status(404).send({ error: "Authenticate User" });
+  }
 }
-     
 
 export async function register(req, res) {
   try {
@@ -127,45 +123,40 @@ export async function login(req, res) {
 export async function getUser(req, res) {
   const { username } = req.params;
 
-  try{
-    if(!username) return res.status(501).send({ error: "Invalid Username"});
+  try {
+    if (!username) return res.status(501).send({ error: "Invalid Username" });
 
-    UserModel.findOne({username}, function(err, user){
-        if(err) return res.status(500).send({err});
-        if(!user) return res.status(501).send({error: "Could not find user"});
+    UserModel.findOne({ username }, function (err, user) {
+      if (err) return res.status(500).send({ err });
+      if (!user) return res.status(501).send({ error: "Could not find user" });
 
-        // remove password from user
-        // mongoose return unneccery data with object tso cobnvert it into JSON
-        const { password, ...rest} = Object.assign({}, user.toJSON());
+      // remove password from user
+      // mongoose return unneccery data with object tso cobnvert it into JSON
+      const { password, ...rest } = Object.assign({}, user.toJSON());
 
-        return res.status(201).send(rest);
-    })
-
-  } catch(error) {
-    return res.status(404).send({error: "can not find User Data"})
+      return res.status(201).send(rest);
+    });
+  } catch (error) {
+    return res.status(404).send({ error: "can not find User Data" });
   }
-
 }
 
 export async function updateUser(req, res) {
-  try{
+  try {
     const id = req.query.id;
 
-    if(id){
+    if (id) {
       const body = req.body;
-      UserModel.updateOne({_id: id}, body, function(err, data){
-        if(err) throw err;
-        
-        return res.status(201).send({msg: "Record Updataed successfully"})
-      })
+      UserModel.updateOne({ _id: id }, body, function (err, data) {
+        if (err) throw err;
 
-    }else{
-      return res.status(401).send({error: "Invalid User"});
+        return res.status(201).send({ msg: "Record Updataed successfully" });
+      });
+    } else {
+      return res.status(401).send({ error: "Invalid User" });
     }
-
-
-  }catch(error){
-    return res.send(401).send({error});
+  } catch (error) {
+    return res.send(401).send({ error });
   }
 }
 
