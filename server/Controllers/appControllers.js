@@ -2,7 +2,7 @@ import UserModel from "../model/User.model.js";
 import bcrypt from "bcrypt";
 import pkg from "jsonwebtoken";
 import ENV from "../router/config.js";
-import otpGenerator from 'otp-generator';
+import otpGenerator from "otp-generator";
 
 const jwt = pkg;
 // {
@@ -163,26 +163,66 @@ export async function updateUser(req, res) {
 }
 
 export async function generateOTP(req, res) {
- req.app.locals.OTP = await  otpGenerator.generate(6, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false})
+  req.app.locals.OTP = await otpGenerator.generate(6, {
+    lowerCaseAlphabets: false,
+    upperCaseAlphabets: false,
+    specialChars: false,
+  });
 
- res.status(201).send({code: req.app.locals.OTP})
-
+  res.status(201).send({ code: req.app.locals.OTP });
 }
 
 export async function verifyOTP(req, res) {
   const { code } = req.query;
-  if(parseInt(req.app.locals.OTP) === parseInt(code)){
+  if (parseInt(req.app.locals.OTP) === parseInt(code)) {
     req.app.locals.OTP = null; //reset OTP value
     req.app.locals.resetSession = true; //
-    return res.status(201).send({msg: "verify Succesully"});
+    return res.status(201).send({ msg: "verify Succesully" });
   }
-  return res.status(400).send({error: "Invalid OTP"}) 
+  return res.status(400).send({ error: "Invalid OTP" });
 }
 
 export async function createResetSession(req, res) {
-  res.json("createResetSession route");
+  if (req.app.locals.resetSession) {
+    req.app.locals.resetSession = false;
+    return res.status(201).send({ msg: "access Granted!" });
+  }
+  return res.status(440).send({ error: "Session Expired" });
 }
 
 export async function resetPassword(req, res) {
-  res.json("resetPassword route");
+  try {
+    if(req.app.locals.resetSession) return res.status(440).send({error: "Session Expired"})
+    const { username, password } = req.body;
+
+    try {
+      UserModel.findOne({ username })
+        .then((user) => {
+          bcrypt
+            .hash(password, 10)
+            .then((hashpassword) => {
+              UserModel.updateOne(
+                { username: user.username },
+                { password: hashpassword },
+                function (err, data) {
+                  if (err) throw err;
+                  return res.status(201).send({ msg: "password Updated..!" });
+                }
+              );
+            })
+            .catch((e) => {
+              return register
+                .status(500)
+                .send({ error: "Enable to hashed User" });
+            });
+        })
+        .catch((error) => {
+          return res.status(404).send({ error: "Useranme not Found" });
+        });
+    } catch {
+      return res.status(500).send({ error });
+    }
+  } catch (error) {
+    return res.status(401).send({ error });
+  }
 }
