@@ -19,7 +19,7 @@ router.get("createResetSession", controller.createResetSession); //reset all the
 
 // put routes-generater
 
-router.put("/updateUser", controller.updateUser); //is   use to update the user profile
+router.put("/updateUser",Auth, controller.updateUser); //is   use to update the user profile
 router.put("/resetPassword",controller.verifyUser,  controller.resetPassword); // use to reset password
 
 router.get("/test", (req, res, next) => {
