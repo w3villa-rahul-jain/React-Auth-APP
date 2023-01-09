@@ -9,13 +9,13 @@ import { registerMail } from '../Controllers/mailer.js';
 // post routes
 router.post("/register", controller.register);
 router.post("/registerMail", registerMail); //send the email
-router.post("/authentication", (req, res) => res.end()); //authenticate user
+router.post("/authentication", controller.verifyUser,  (req, res) => res.end()); //authenticate user
 router.post("/login", controller.verifyUser, controller.login); //login in app
 
 // get routes
 router.get("/user/:username", controller.getUser); //user with username
 router.get("/generateOTP",controller.verifyUser, localVariables,  controller.generateOTP); //generate random OTP
-router.get("/verifyOTP", controller.verifyOTP); //verify generated OTP
+router.get("/verifyOTP",controller.verifyUser, controller.verifyOTP); //verify generated OTP
 router.get("createResetSession", controller.createResetSession); //reset all the variables
 
 // put routes-generater
