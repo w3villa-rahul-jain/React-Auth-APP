@@ -192,7 +192,8 @@ export async function createResetSession(req, res) {
 
 export async function resetPassword(req, res) {
   try {
-    if (req.app.locals.resetSession) return res.status(440).send({ error: "Session Expired" });
+    if (req.app.locals.resetSession)
+      return res.status(440).send({ error: "Session Expired" });
     const { username, password } = req.body;
 
     try {
@@ -211,9 +212,7 @@ export async function resetPassword(req, res) {
               );
             })
             .catch((e) => {
-              return res
-                .status(500)
-                .send({ error: "Enable to hashed User" });
+              return res.status(500).send({ error: "Enable to hashed User" });
             });
         })
         .catch((error) => {
